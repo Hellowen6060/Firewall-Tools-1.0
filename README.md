@@ -1,6 +1,6 @@
 # Gestión de Firewall desde PowerShell 1.0
 
-![Logo](Captura de pantalla 2026-04-17 222245.png)
+<img width="1221" height="830" alt="CapturaApp" src="https://github.com/user-attachments/assets/46959ac0-e27f-4c83-bdcd-8095384fa71a" />
 
 
 Este proyecto contiene un script en PowerShell que permite gestionar reglas de bloqueo de programas (`.exe`) en el Firewall de Windows de forma sencilla y automatizada.
