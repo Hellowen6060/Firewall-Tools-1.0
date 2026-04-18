@@ -1,4 +1,6 @@
-﻿[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+﻿# Configurar salida en UTF-8 para mostrar tildes y caracteres especiales
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # Verificar si el script corre como administrador
 $principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -38,40 +40,40 @@ do {
 
     switch ($opcion) {
         "1" {
-    Add-Type -AssemblyName System.Windows.Forms
-    $dialog = New-Object System.Windows.Forms.OpenFileDialog
-    $dialog.Filter = "Ejecutables (*.exe)|*.exe"
-    $dialog.Title = "Selecciona el archivo .exe a bloquear"
+            Add-Type -AssemblyName System.Windows.Forms
+            $dialog = New-Object System.Windows.Forms.OpenFileDialog
+            $dialog.Filter = "Ejecutables (*.exe)|*.exe"
+            $dialog.Title = "Selecciona el archivo .exe a bloquear"
 
-    if ($dialog.ShowDialog() -eq "OK") {
-        $exeblock = $dialog.FileName
-        Write-Host ""  # línea vacía después de seleccionar opción
-        Write-Host "Ruta detectada: $exeblock" -ForegroundColor Cyan
+            if ($dialog.ShowDialog() -eq "OK") {
+                $exeblock = $dialog.FileName
+                Write-Host ""  # línea vacía después de seleccionar opción
+                Write-Host "Ruta detectada: $exeblock" -ForegroundColor Cyan
 
-        $ruleNameIn = "Bloqueo Entrada $([System.IO.Path]::GetFileName($exeblock))"
-        $ruleNameOut = "Bloqueo Salida $([System.IO.Path]::GetFileName($exeblock))"
+                $ruleNameIn = "Bloqueo Entrada $([System.IO.Path]::GetFileName($exeblock))"
+                $ruleNameOut = "Bloqueo Salida $([System.IO.Path]::GetFileName($exeblock))"
 
-        if (-not (Get-NetFirewallRule -DisplayName $ruleNameIn -ErrorAction SilentlyContinue)) {
-            New-NetFirewallRule -DisplayName $ruleNameIn -Direction Inbound -Program "$exeblock" -Action Block
-            Write-Host "Se ha realizado el bloqueo entrante para $exeblock" -ForegroundColor Green
-        } else {
-            Write-Host "La regla de entrada ya existe para $exeblock" -ForegroundColor Yellow
+                if (-not (Get-NetFirewallRule -DisplayName $ruleNameIn -ErrorAction SilentlyContinue)) {
+                    New-NetFirewallRule -DisplayName $ruleNameIn -Direction Inbound -Program "$exeblock" -Action Block
+                    Write-Host "Se ha realizado el bloqueo entrante para $exeblock" -ForegroundColor Green
+                } else {
+                    Write-Host "La regla de entrada ya existe para $exeblock" -ForegroundColor Yellow
+                }
+
+                if (-not (Get-NetFirewallRule -DisplayName $ruleNameOut -ErrorAction SilentlyContinue)) {
+                    New-NetFirewallRule -DisplayName $ruleNameOut -Direction Outbound -Program "$exeblock" -Action Block
+                    Write-Host "Se ha realizado el bloqueo saliente para $exeblock" -ForegroundColor Green
+                } else {
+                    Write-Host "La regla de salida ya existe para $exeblock" -ForegroundColor Yellow
+                }
+            } else {
+                Write-Host ""  # línea vacía
+                Write-Host "No seleccionaste ningún archivo .exe." -ForegroundColor Red
+            }
+
+            Pause
+            Mostrar-Titulo
         }
-
-        if (-not (Get-NetFirewallRule -DisplayName $ruleNameOut -ErrorAction SilentlyContinue)) {
-            New-NetFirewallRule -DisplayName $ruleNameOut -Direction Outbound -Program "$exeblock" -Action Block
-            Write-Host "Se ha realizado el bloqueo saliente para $exeblock" -ForegroundColor Green
-        } else {
-            Write-Host "La regla de salida ya existe para $exeblock" -ForegroundColor Yellow
-        }
-    } else {
-        Write-Host ""  # línea vacía
-        Write-Host "No seleccionaste ningún archivo .exe." -ForegroundColor Red
-    }
-
-    Pause
-    Mostrar-Titulo
-}
 
         "2" {
             $rules = Get-NetFirewallRule | Where-Object { $_.Action -eq "Block" } | Get-NetFirewallApplicationFilter | Where-Object { $_.Program -like "*.exe" }
@@ -110,10 +112,12 @@ do {
             Pause
             Mostrar-Titulo
         }
+
         "3" {
             Mostrar-Titulo
             Write-Host "Saliendo del script..." -ForegroundColor Yellow
         }
+
         Default {
             Write-Host "Opción inválida. Intenta nuevamente." -ForegroundColor Red
             Pause
