@@ -1,5 +1,5 @@
 ﻿# Configurar salida en UTF-8 para mostrar tildes y caracteres especiales
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+#[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 # Verificar si el script corre como administrador
 $principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
