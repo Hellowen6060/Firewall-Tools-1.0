@@ -20,4 +20,4 @@ Este proyecto contiene un script en PowerShell que permite gestionar reglas de b
 Puedes ejecutar el script directamente desde GitHub sin necesidad de descargarlo manualmente, usando:
 
 ```powershell
-irm "https://raw.githubusercontent.com/<usuario>/<repositorio>/main/BloqueoFirewall.ps1" | iex
+irm "https://raw.githubusercontent.com/Hellowen6060/Firewall-Tools-1.0/refs/heads/main/BloqueoFirewall.ps1" | iex
