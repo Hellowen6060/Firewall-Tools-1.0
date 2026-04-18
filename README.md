@@ -17,7 +17,20 @@ Este proyecto contiene un script en PowerShell que permite gestionar reglas de b
 - Selector gráfico de archivos: puedes elegir el `.exe` directamente desde un cuadro de diálogo.
 
 ## 🚀 Uso rápido desde PowerShell
-Puedes ejecutar el script directamente desde GitHub sin necesidad de descargarlo manualmente, usando:
 
-```powershell
-irm "https://raw.githubusercontent.com/Hellowen6060/Firewall-Tools-1.0/refs/heads/main/BloqueoFirewall.ps1" | iex
+🚀 Instrucciones de uso del script
+- Abrir PowerShell como administrador
+- ⚠️ Este paso es obligatorio si vas a ejecutar el script directamente desde GitHub con irm | iex.
+Si no lo haces, el bloque de autoelevación intentará relanzar el script y la ventana se cerrará de inmediato porque el archivo no existe en disco (solo está cargado en memoria).
+- Ejecutar el script desde GitHub
+Una vez abierta la consola en modo administrador, copia y pega el siguiente comando:
+irm "https://raw.githubusercontent.com/Hellowen6060/Firewall-Tools-1.0/main/BloqueoFirewall.ps1" | iex
+- Esto descargará el script desde tu repositorio y lo ejecutará directamente en la sesión actual.
+- Usar el menú interactivo
+El script mostrará un menú con tres opciones:
+- 1 → Bloquear conexiones a un .exe (selector gráfico de archivos).
+- 2 → Listar y eliminar reglas de bloqueo existentes.
+- 3 → Salir del script.
+- Confirmar resultados
+- Al bloquear un .exe, se crearán reglas de entrada y salida en el Firewall.
+- Al listar, verás todas las reglas de bloqueo y podrás eliminar la que elijas.
